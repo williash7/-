@@ -1,0 +1,5 @@
+{
+  "name": "Limud Yomi Tracker",
+  "description": "A web application for managing daily segmented study sessions. It features individual timers for study tracks, daily progress tracking, historical calendar view, streaks, and Hebrew date and Parasha display.",
+  "requestFramePermissions": []
+}

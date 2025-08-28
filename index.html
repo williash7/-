@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>מעקב לימוד יומי</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module">
+      import { Hebcal, HDate, Location } from "https://cdn.jsdelivr.net/npm/@hebcal/core@4.0.0-alpha.12/dist/esm/index.min.js";
+      window.Hebcal = { Hebcal, HDate, Location };
+    </script>
+    <style>
+      body {
+        -webkit-tap-highlight-color: transparent;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/"
+  }
+}
+</script>
+</head>
+  <body class="bg-gray-900 text-gray-100">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
