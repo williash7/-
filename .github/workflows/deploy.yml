@@ -1,4 +1,4 @@
-  name: Deploy to GitHub Pages
+ name: Deploy to GitHub Pages
 
   on:
     push:
@@ -17,9 +17,8 @@
         - uses: actions/setup-node@v4
           with:
             node-version: 20
-            cache: npm
 
-      - run: npm install
+        - run: npm install
 
         - run: npm run build
           env:
