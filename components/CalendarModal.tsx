@@ -1,5 +1,5 @@
-
 import React, { useState } from 'react';
+import { HDate, gematriya } from '@hebcal/core';
 import { useLimud } from '../hooks/useLimudState';
 import { getDaysInMonth, formatYYYYMMDD } from '../services/dateService';
 import Icon from './Icon';
@@ -47,9 +47,6 @@ const CalendarModal: React.FC<CalendarModalProps> = ({ onClose }) => {
     const { state } = useLimud();
     const [currentDate, setCurrentDate] = useState(new Date());
     const [selectedDay, setSelectedDay] = useState<Date | null>(null);
-    
-    const Hebcal = window.Hebcal?.Hebcal;
-    const HDate = window.Hebcal?.HDate;
 
     const changeMonth = (delta: number) => {
         setCurrentDate(prev => {
@@ -67,24 +64,23 @@ const CalendarModal: React.FC<CalendarModalProps> = ({ onClose }) => {
     const lastDayOfMonthDate = new Date(year, month + 1, 0);
 
     const todayKey = formatYYYYMMDD(new Date());
-    
+
     let hebrewMonthStr = '';
-    if (HDate && Hebcal) {
+    try {
         const hFirst = new HDate(firstDayOfMonthDate);
         const hLast = new HDate(lastDayOfMonthDate);
-        
-        const firstHebMonthName = hFirst.getMonthName('h');
-        const lastHebMonthName = hLast.getMonthName('h');
-        const hebrewYear = hFirst.getFullYear();
-        const hebrewYearStr = Hebcal.gematriya(hebrewYear);
+        const firstHebMonthName = hFirst.getMonthName();
+        const lastHebMonthName = hLast.getMonthName();
+        const hebrewYearStr = gematriya(hFirst.getFullYear());
 
         if (firstHebMonthName === lastHebMonthName) {
             hebrewMonthStr = `${firstHebMonthName} ${hebrewYearStr}`;
         } else {
             hebrewMonthStr = `${firstHebMonthName} / ${lastHebMonthName} ${hebrewYearStr}`;
         }
+    } catch (e) {
+        // hebcal unavailable
     }
-
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
@@ -115,13 +111,15 @@ const CalendarModal: React.FC<CalendarModalProps> = ({ onClose }) => {
                         let bgColor = 'bg-gray-700 hover:bg-gray-600';
                         if (allDone) bgColor = 'bg-green-800 hover:bg-green-700';
                         else if (someDone) bgColor = 'bg-yellow-800 hover:bg-yellow-700';
-                        
+
                         const isToday = dayKey === todayKey;
-                        
+
                         let hebrewDayString = '';
-                        if (HDate && Hebcal) {
+                        try {
                             const hDate = new HDate(day);
-                            hebrewDayString = Hebcal.gematriya(hDate.getDate());
+                            hebrewDayString = gematriya(hDate.getDate());
+                        } catch (e) {
+                            hebrewDayString = String(day.getDate());
                         }
 
                         return (
